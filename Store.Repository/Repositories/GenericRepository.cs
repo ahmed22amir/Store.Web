@@ -2,6 +2,7 @@
 using Store.Data.Context;
 using Store.Data.Entity;
 using Store.Repository.InterFaces;
+using Store.Repository.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,5 +34,16 @@ namespace Store.Repository.Repositories
 
         public void Update(TEntity entity)
         => _context.Set<TEntity>().Update(entity);
+
+        public async Task<TEntity> GetWithSpecificationByIdAsync(ISpecification<TEntity> specs)
+        => await ApplySpecification(specs).FirstOrDefaultAsync();
+
+        public async Task<IReadOnlyList<TEntity>> GetAllWithSpecificationAsync(ISpecification<TEntity> specs)
+        => await ApplySpecification(specs).ToListAsync();
+
+        public IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specs)
+        {
+            return SpecificationEvaluator<TEntity,TKey>.GetQuery(_context.Set<TEntity>(), specs);
+        }
     }
 }
