@@ -10,5 +10,20 @@ namespace Store.Repository.Specification.ProductSpecs
     {
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }
+        public string? Sort { get; set; }
+        public int PageIndex { get; set; }
+        public const int MAXPAGESIZE = 50;
+        private int _PageSize;
+        public int PageSize
+        {
+            get => _PageSize;
+            set => _PageSize =(value > MAXPAGESIZE) ? int.MaxValue : value;
+        }
+        private string? _Search;
+        public string? Search
+        {
+            get => _Search;
+            set => _Search = value?.Trim().ToLower();
+        }
     }
 }

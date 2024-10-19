@@ -14,6 +14,7 @@ namespace Store.Repository.InterFaces
         Task<IReadOnlyList<TEntity>> GetAllAsync();
         Task<TEntity> GetWithSpecificationByIdAsync(ISpecification<TEntity> specs);
         Task<IReadOnlyList<TEntity>> GetAllWithSpecificationAsync(ISpecification<TEntity> specs);
+        Task<int> GetCountWithSpecification(ISpecification<TEntity> specs);
         Task AddAsync(TEntity entity);
         void Delete(TEntity entity);
         void Update(TEntity entity);
